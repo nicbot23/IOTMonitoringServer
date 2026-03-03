@@ -96,7 +96,7 @@ DATABASES = {
         "NAME": "iot_data",  # Nombre de la base de datos
         "USER": "dbadmin",  # Nombre de usuario
         "PASSWORD": "uniandesIOT1234*",  # Contraseña
-        "HOST": "10.0.58.144", #"ip.maquina.db",  # Dirección IP de la base de datos
+        "HOST": "10.0.113.245", #"ip.maquina.db",  # Dirección IP de la base de datos
         "PORT": "5432",  # Puerto de la base de datos
     }
 }
@@ -156,7 +156,7 @@ LOGOUT_REDIRECT_URL = '/login/'
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 # Dirección del bróker MQTT
-MQTT_HOST = "3.237.60.104" #"ip.maquina.mqtt"
+MQTT_HOST = "10.0.96.46" #"ip.maquina.mqtt"
 
 # Puerto del bróker MQTT
 MQTT_PORT = 8082
