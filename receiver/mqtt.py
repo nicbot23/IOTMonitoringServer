@@ -52,14 +52,17 @@ def on_connect(client, userdata, flags, rc):
     print("Servicio de recepcion de datos iniciado")
 
 
+# def on_disconnect(client: mqtt.Client, userdata, rc):
+#     '''
+#     Función que se ejecuta cuando se desconecta del broker.
+#     Intenta reconectar al bróker.
+#     '''
+#     print("Desconectado con mensaje:" + str(mqtt.connack_string(rc)))
+#     print("Reconectando...")
+#     client.reconnect()
 def on_disconnect(client: mqtt.Client, userdata, rc):
-    '''
-    Función que se ejecuta cuando se desconecta del broker.
-    Intenta reconectar al bróker.
-    '''
-    print("Desconectado con mensaje:" + str(mqtt.connack_string(rc)))
-    print("Reconectando...")
-    client.reconnect()
+    print(f"Desconectado rc={rc}")
+    # NO reconectar aquí. loop_forever ya maneja reconexión si le pones reconnect_delay_set.
 
 
 print("Iniciando cliente MQTT...", settings.MQTT_HOST, settings.MQTT_PORT)
@@ -74,6 +77,7 @@ try:
                        tls_version=ssl.PROTOCOL_TLSv1_2, cert_reqs=ssl.CERT_NONE)
 
     client.username_pw_set(settings.MQTT_USER, settings.MQTT_PASSWORD)
+    client.reconnect_delay_set(min_delay=1, max_delay=30)
     client.connect(settings.MQTT_HOST, settings.MQTT_PORT)
 
 except Exception as e:
