@@ -3,6 +3,7 @@ from . import utils
 import json
 import os
 import ssl
+import socket
 import paho.mqtt.client as mqtt
 from django.conf import settings
 
@@ -67,7 +68,9 @@ def on_disconnect(client: mqtt.Client, userdata, rc):
 
 print("Iniciando cliente MQTT...", settings.MQTT_HOST, settings.MQTT_PORT)
 try:
-    client = mqtt.Client(mqtt.CallbackAPIVersion.VERSION1, settings.MQTT_USER)
+    client_id = f"receiver-{socket.gethostname()}"
+    client = mqtt.Client(client_id=client_id, callback_api_version=mqtt.CallbackAPIVersion.VERSION1)
+    client.reconnect_delay_set(min_delay=1, max_delay=30)
     client.on_connect = on_connect
     client.on_message = on_message
     client.on_disconnect = on_disconnect
